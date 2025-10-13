@@ -10,7 +10,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.types import interrupt, Command
 import os
 
-# Set API key directly (since .env not working)
+# Set API key directly 
 os.environ["GOOGLE_API_KEY"] = "ADD API KEY"
 
 # Define available stocks
@@ -102,3 +102,4 @@ print("\n🛑 AI needs confirmation:", state.get("__interrupt__"))
 decision = input("Approve (yes/no): ")
 state = graph.invoke(Command(resume=decision), config=config)
 print("\n✅ Final AI Response:", state["messages"][-1].content)
+
