@@ -73,13 +73,13 @@ config = {"configurable": {"thread_id": "buy_thread"}}
 # ------------------- INTERACTIVE FLOW -------------------
 
 # Step 1: Ask user to choose a stock
-print("\n📈 Available stocks:")
+print("\n Available stocks:")
 for stock, price in AVAILABLE_STOCKS.items():
     print(f" - {stock} : ${price}")
 
 selected_stock = input("\nPlease select a stock symbol (e.g., MSFT): ").upper()
 if selected_stock not in AVAILABLE_STOCKS:
-    print("❌ Invalid stock symbol. Exiting.")
+    print(" Invalid stock symbol. Exiting.")
     exit()
 
 quantity = int(input(f"Enter quantity of {selected_stock} stocks to check price for: "))
@@ -89,17 +89,18 @@ state = graph.invoke(
     {"messages": [{"role": "user", "content": f"What is the current price of {quantity} {selected_stock} stocks?"}]},
     config=config
 )
-print("\n🤖 AI Response:", state["messages"][-1].content)
+print("\n AI Response:", state["messages"][-1].content)
 
 # Step 3: Ask AI to buy the selected stock
 state = graph.invoke(
     {"messages": [{"role": "user", "content": f"Buy {quantity} {selected_stock} stocks at current price."}]},
     config=config
 )
-print("\n🛑 AI needs confirmation:", state.get("__interrupt__"))
+print("\n AI needs confirmation:", state.get("__interrupt__"))
 
 # Step 4: Ask for user confirmation
 decision = input("Approve (yes/no): ")
 state = graph.invoke(Command(resume=decision), config=config)
-print("\n✅ Final AI Response:", state["messages"][-1].content)
+print("\n Final AI Response:", state["messages"][-1].content)
+
 
